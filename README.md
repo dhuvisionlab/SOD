@@ -3,23 +3,24 @@ This repos contains the official codes for papers:<br>
 <br>
 **A deep neural network for small object detection in complex environments 
 with unmanned aerial vehicle imagery**<br>
-[D. Li†](https://davidleepp.github.io/), F. Ahmed†, N. Wu*, and A.I. Sethi<br>
-<ins>†</ins> *Equal contribution*<br>
-Pubilshed on *Plants* in 2022<br>
-[[Paper](https://www.sciencedirect.com/science/article/pii/S095219762500466X?via%3Dihub)]<br>
+Sayed Jobaer, Xue-song Tang, Yihong Zhang<br
+Pubilshed on *Engineering Applications of Artificial Intelligence* in 2025<br>
+[[Paper](https://doi.org/10.1016/j.engappai.2025.110466)]<br>
 <br>
 
 ## Prerequisites<br>
 The code written in pytorch, and their corresponding configurations are as follows:
-* All deep networks run under Ubuntu 18.04
-  * Python >=3.7
+* All deep networks run under Ubuntu 20.04
+  * Python >=3.9
   * Pytorch >=1.8.0 
 
 ## Introduction<br>
 
-Plant diseases and pests are a global threat to crop yields, and they may be even more destructive for smallholder farmers whose livelihoods depend heavily on healthy harvests.  In this scenario, early and precise detection of plant diseases and pests is critical for avoiding losses in agricultural production. Recently, disease prevention in jute plants has become an urgent topic as a result of the growing demand for finer quality fiber.<br><br>
-This research presents a deep-learning network called YOLO-JD for detecting jute diseases from images. In the main architecture of YOLO-JD, we integrated three new modules such as Sand Clock Feature Extraction Module (SCFEM), Deep Sand ClockFeature Extraction Module (DSCFEM), and Spatial Pyramid Pooling Module (SPPM) to extract image features effectively. We also built a new large-scale image dataset for jute diseases and pests with ten classes.<br>
-***<p align="center">Architecture of YOLO-JD***<br><br>
+Deep learning-based object detectors perform effectively on edge devices but encounter challenges with small and flat objects in complex environments, especially under low-light conditions and in high-altitude images
+captured by unmanned aerial vehicles (UAVs). The primary issue is the pixel similarity between objects and their backgrounds, making detection challenging. While existing detectors struggle to detect small and flat objects in these scenarios, the advent of you only look once (YOLO) algorithms have shown promise. However, they still have limitations in detecting small and flat objects under these conditions. Due to a shortage of suitable datasets covering complex environments and lighting conditions, the field lacks comprehensive research on detecting small and flat objects in UAV-assisted images.<br><be>
+
+To address these issues, we develop a dataset with nine classes tailored to small object detection (SOD) challenges. We propose a dynamic model based on the you only look once network v5 (version 6.2) architecture to overcome the above-mentioned limitations.<br>
+***<p align="center">Architecture of YOLO-SOD***<br><br>
 <img src="images/1.png" width="90%" height="100%"><br><br>
 ***<p align="center">The detailed demonstration of several key modules in YOLO-JD***<br><br>
 <img src="images/2.png" width="90%" height="90%"><br><br>
