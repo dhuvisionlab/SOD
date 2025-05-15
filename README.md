@@ -1,4 +1,5 @@
-# YOLO-JD<br>
+# A deep neural network for small object detection in complex environments 
+with unmanned aerial vehicle imagery<br>
 This repos contains the official codes for papers:<br>
 <br>
 **YOLO-JD: A Deep Learning Network for Jute Diseases and Pests Detection from Images**<br>
