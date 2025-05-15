@@ -30,7 +30,7 @@ To address these issues, we develop a dataset with nine classes tailored to smal
 ## Quick Start<br>
 
 ```bash
-git clone https://github.com/foysalahmed10/YOLO-JD.git # clone
+git clone https://github.com/dhuvisionlab/SOD.git # clone 
 cd YOLO-SOD
 pip install -r requirements.txt  # install
 ```
