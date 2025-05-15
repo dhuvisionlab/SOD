@@ -3,7 +3,7 @@ This repos contains the official codes for papers:<br>
 <br>
 **A deep neural network for small object detection in complex environments 
 with unmanned aerial vehicle imagery**<br>
-Sayed Jobaer, Xue-song Tang, Yihong Zhang<br
+Sayed Jobaer, Xue-song Tang, Yihong Zhang <be>
 Pubilshed on *Engineering Applications of Artificial Intelligence* in 2025<br>
 [[Paper](https://doi.org/10.1016/j.engappai.2025.110466)]<br>
 <br>
