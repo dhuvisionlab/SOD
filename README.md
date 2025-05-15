@@ -6,7 +6,7 @@ This repos contains the official codes for papers:<br>
 [D. Li†](https://davidleepp.github.io/), F. Ahmed†, N. Wu*, and A.I. Sethi<br>
 <ins>†</ins> *Equal contribution*<br>
 Pubilshed on *Plants* in 2022<br>
-[[Paper](https://www.mdpi.com/2223-7747/11/7/937)]<br>
+[[Paper](https://www.sciencedirect.com/science/article/pii/S095219762500466X?via%3Dihub)]<br>
 <br>
 
 ## Prerequisites<br>
