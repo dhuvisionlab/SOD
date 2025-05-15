@@ -49,6 +49,9 @@ from utils.general import (LOGGER, Profile, check_file, check_img_size, check_im
 from utils.plots import Annotator, colors, save_one_box
 from utils.torch_utils import select_device, smart_inference_mode
 
+# import the image_enhancer module
+from utils.dataloaders import LoadImages
+from utils.image_enhancer import enhance_dark_images
 
 @smart_inference_mode()
 def run(
@@ -115,6 +118,9 @@ def run(
     model.warmup(imgsz=(1 if pt or model.triton else bs, 3, *imgsz))  # warmup
     seen, windows, dt = 0, [], (Profile(), Profile(), Profile())
     for path, im, im0s, vid_cap, s in dataset:
+        # Apply image enhancement to improve brightness and quality
+        #enhanced_im = enhance_dark_images(im0s, brightness_factor=1.5, threshold=100)
+    
         with dt[0]:
             im = torch.from_numpy(im).to(model.device)
             im = im.half() if model.fp16 else im.float()  # uint8 to fp16/32
@@ -239,7 +245,7 @@ def parse_opt():
     parser.add_argument('--project', default=ROOT / 'runs/detect', help='save results to project/name')
     parser.add_argument('--name', default='exp', help='save results to project/name')
     parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
-    parser.add_argument('--line-thickness', default=3, type=int, help='bounding box thickness (pixels)')
+    parser.add_argument('--line-thickness', default=4, type=int, help='bounding box thickness (pixels)')
     parser.add_argument('--hide-labels', default=False, action='store_true', help='hide labels')
     parser.add_argument('--hide-conf', default=False, action='store_true', help='hide confidences')
     parser.add_argument('--half', action='store_true', help='use FP16 half-precision inference')
@@ -254,7 +260,31 @@ def parse_opt():
 def main(opt):
     check_requirements(exclude=('tensorboard', 'thop'))
     run(**vars(opt))
+    
+#Modified  
+    # Initialize the dataset object
+    dataset = LoadImages(source=opt.source, img_size=opt.imgsz[0], vid_stride=opt.vid_stride)
 
+    with torch.no_grad():
+        for path, img, vid_cap, vid_info, frames in dataset:
+            img = torch.from_numpy(img).to(device)
+            img = img.half() if half else img.float()  # uint8 to fp16/32
+
+            # Image enhancement
+            # Convert to PIL for image enhancement
+            image_pil = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+
+            # Calculate brightness of the image
+            brightness = calculate_brightness(image_pil)
+
+            # Check if the image is dark (brightness below the threshold)
+            threshold = 100
+            if brightness < threshold:
+                # Enhance brightness
+                image_pil = enhance_dark_images(image_pil, brightness_factor=1.5, threshold=100)
+
+            # Convert back to OpenCV format
+            img = cv2.cvtColor(np.array(image_pil), cv2.COLOR_RGB2BGR)
 
 if __name__ == '__main__':
     opt = parse_opt()

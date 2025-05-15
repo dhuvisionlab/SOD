@@ -1,0 +1,9 @@
+
+
+train: /media/ubuntu/Data/YOLO_Backup/yolo_new/data/datasets/coco/train/images
+val: /media/ubuntu/Data/YOLO_Backup/yolo_new/data/datasets/coco/valid/images
+test: /home/txs/yolov5/data/dataset/test/images
+
+
+nc: 9
+names: ['Cargo', 'Person', 'Car', 'Electric_bike', 'Truck', 'Boat', 'Bus', 'Bicycle', 'Tram']

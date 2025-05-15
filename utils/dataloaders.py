@@ -34,6 +34,25 @@ from utils.general import (DATASETS_DIR, LOGGER, NUM_THREADS, TQDM_BAR_FORMAT, c
                            check_yaml, clean_str, cv2, is_colab, is_kaggle, segments2boxes, unzip_file, xyn2xy,
                            xywh2xyxy, xywhn2xyxy, xyxy2xywhn)
 from utils.torch_utils import torch_distributed_zero_first
+import sys
+import os
+
+# Get the current directory of this script
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Add the parent directory to the Python path
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
+# import the image_enhancer module
+from .image_enhancer import enhance_dark_images
+from .image_enhancer import calculate_brightness
+from PIL import Image
+import cv2
+
+IMG_FORMATS = ('bmp', 'jpg', 'jpeg', 'png', 'tif', 'tiff', 'webp')
+VID_FORMATS = ('mov', 'avi', 'mp4', 'mpg', 'mpeg', 'm4v', 'wmv', 'mkv')
+
 
 # Parameters
 HELP_URL = 'See https://github.com/ultralytics/yolov5/wiki/Train-Custom-Data'
@@ -234,8 +253,10 @@ class LoadScreenshots:
             im = np.ascontiguousarray(im)  # contiguous
         self.frame += 1
         return str(self.screen), im, im0, None, s  # screen, img, original img, im0s, s
+      
 
-
+ 
+#Modified loadImages (Working)
 class LoadImages:
     # YOLOv5 image/video dataloader, i.e. `python detect.py --source image.jpg/vid.mp4`
     def __init__(self, path, img_size=640, stride=32, auto=True, transforms=None, vid_stride=1):
@@ -308,14 +329,23 @@ class LoadImages:
             assert im0 is not None, f'Image Not Found {path}'
             s = f'image {self.count}/{self.nf} {path}: '
 
-        if self.transforms:
-            im = self.transforms(im0)  # transforms
-        else:
-            im = letterbox(im0, self.img_size, stride=self.stride, auto=self.auto)[0]  # padded resize
-            im = im.transpose((2, 0, 1))[::-1]  # HWC to CHW, BGR to RGB
-            im = np.ascontiguousarray(im)  # contiguous
+            # Convert numpy array to PIL image
+            image_pil = Image.fromarray(cv2.cvtColor(im0, cv2.COLOR_BGR2RGB))
 
-        return path, im, im0, self.cap, s
+            # Apply image enhancement to improve brightness and quality
+            enhanced_image = enhance_dark_images(image_pil, brightness_factor=1.5, threshold=100)
+
+            # Convert the enhanced PIL image back to a numpy array
+            im0 = cv2.cvtColor(np.array(enhanced_image), cv2.COLOR_RGB2BGR)
+
+            if self.transforms:
+                im = self.transforms(im0)  # transforms
+            else:
+                im = letterbox(im0, self.img_size, stride=self.stride, auto=self.auto)[0]  # padded resize
+                im = im.transpose((2, 0, 1))[::-1]  # HWC to CHW, BGR to RGB
+                im = np.ascontiguousarray(im)  # contiguous
+
+            return path, im, im0, self.cap, s
 
     def _new_video(self, path):
         # Create a new video capture object

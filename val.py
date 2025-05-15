@@ -46,6 +46,8 @@ from utils.metrics import ConfusionMatrix, ap_per_class, box_iou
 from utils.plots import output_to_target, plot_images, plot_val_study
 from utils.torch_utils import select_device, smart_inference_mode
 
+# Import the image_enhancer module and relevant functions
+from utils.image_enhancer import enhance_dark_images, calculate_brightness
 
 def save_one_txt(predn, save_conf, shape, file):
     # Save one txt result
@@ -55,6 +57,8 @@ def save_one_txt(predn, save_conf, shape, file):
         line = (cls, *xywh, conf) if save_conf else (cls, *xywh)  # label format
         with open(file, 'a') as f:
             f.write(('%g ' * len(line)).rstrip() % line + '\n')
+
+
 
 
 def save_one_json(predn, jdict, path, class_map):
@@ -125,6 +129,7 @@ def run(
         plots=True,
         callbacks=Callbacks(),
         compute_loss=None,
+        
 ):
     # Initialize/load model and set device
     training = model is not None
