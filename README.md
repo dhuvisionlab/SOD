@@ -1,8 +1,8 @@
-# A deep neural network for small object detection in complex environments 
-with unmanned aerial vehicle imagery<br>
+# YOLO-SOD<br>
 This repos contains the official codes for papers:<br>
 <br>
-**YOLO-JD: A Deep Learning Network for Jute Diseases and Pests Detection from Images**<br>
+**A deep neural network for small object detection in complex environments 
+with unmanned aerial vehicle imagery**<br>
 [D. Li†](https://davidleepp.github.io/), F. Ahmed†, N. Wu*, and A.I. Sethi<br>
 <ins>†</ins> *Equal contribution*<br>
 Pubilshed on *Plants* in 2022<br>
